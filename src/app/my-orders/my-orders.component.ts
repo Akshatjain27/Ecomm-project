@@ -10,7 +10,15 @@ import { ProductService } from '../service/product.service';
 export class MyOrdersComponent {
   orderData:AddressDetail[]|undefined;
  constructor(private product:ProductService){}
- ngOnInIt():void{
+ ngOnInit():void{
+  this.getOrderList();
+ }
+ cancelOrder(orderId:number|undefined){
+  orderId && this.product.deleteOrder(orderId).subscribe((result)=>{
+    this.getOrderList();
+  })
+ }
+ getOrderList(){
   this.product.orderList().subscribe((result)=>{
     this.orderData=result;
   })
